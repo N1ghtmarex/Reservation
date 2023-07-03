@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         /// <summary>
         /// Добавить клиента
         /// </summary>
-        /// <param name="Данные о клиенте"></param>
+        /// <param name="request">Данные о клиенте</param>
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
         /// <response code="500">Клиент уже существует</response>
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="phone">Номер телефона</param>
         /// <returns>Возвращает модель клиента</returns>
-        /// /// <response code="204">Выполнено успешно</response>
+        /// <response code="204">Выполнено успешно</response>
         /// <response code="500">Клиент не найден</response>
         [HttpGet]
         public async Task<ActionResult> GetClient(string phone)
