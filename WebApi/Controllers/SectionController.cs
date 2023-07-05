@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Sections.Commands.Delete;
 using Application.Sections.Create;
+using Application.Sections.Queries.GetSection;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -42,6 +43,16 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetSection(string name)
+        {
+            var query = new GetSectionQuery { Name = name };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
         }
     }
 }
