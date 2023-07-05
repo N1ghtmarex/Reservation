@@ -14,13 +14,11 @@ namespace WebApi.Controllers
     [Route("/api/sections")]
     public class SectionController : ControllerBase
     {
-        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public SectionController(IApplicationDbContext context, IMediator mediator, IMapper mapper)
+        public SectionController(IMediator mediator, IMapper mapper)
         {
-            _context = context;
             _mediator = mediator;
             _mapper = mapper;
         }

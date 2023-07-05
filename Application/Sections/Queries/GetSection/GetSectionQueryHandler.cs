@@ -3,6 +3,7 @@ using AutoMapper;
 using Application.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
+using Application.Sports.Queries;
 
 namespace Application.Sections.Queries.GetSection
 {
@@ -19,7 +20,11 @@ namespace Application.Sections.Queries.GetSection
 
         public async Task<SectionVm> Handle(GetSectionQuery request, CancellationToken cancellationToken)
         {
-            var section = await _context.Sections.FirstOrDefaultAsync(x => x.Name.ToLower() == request.Name.ToLower());
+            var section = await _context.Sections
+                .Include(x => x.Coach)
+                .Include(x => x.Room)
+                .Include(x => x.Sport)
+                .FirstOrDefaultAsync(x => x.Name.ToLower() == request.Name.ToLower());
 
             if (section != null)
                 return _mapper.Map<SectionVm>(section);

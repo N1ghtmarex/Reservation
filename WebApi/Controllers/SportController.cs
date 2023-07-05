@@ -6,7 +6,6 @@ using Application.Sports.Queries.GetSportsList;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Models.Sports;
 
 namespace WebApi.Controllers
 {
@@ -26,13 +25,13 @@ namespace WebApi.Controllers
         /// <summary>
         /// Добавить вид спорта
         /// </summary>
-        /// <param name="request">Вид спорта</param>
+        /// <param name="name">Вид спорта</param>
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
         [HttpPost]
-        public async Task<ActionResult> CreateSport([FromForm] CreateSportDto request)
+        public async Task<ActionResult> CreateSport([FromForm] string name)
         {
-            var command = _mapper.Map<CreateSportCommand>(request);
+            var command = new CreateSportCommand { Name = name};
 
             await _mediator.Send(command);
 

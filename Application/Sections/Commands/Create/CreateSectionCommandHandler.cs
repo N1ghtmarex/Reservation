@@ -23,7 +23,10 @@ namespace Application.Sections.Create
             await _context.Sections.AddAsync(new Section
             {
                 Name = request.Name,
-                SportId = request.SportID
+                SportId = request.SportId,
+                CoachId = request.CoachId,
+                RoomId = request.RoomId
+                
             }, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);

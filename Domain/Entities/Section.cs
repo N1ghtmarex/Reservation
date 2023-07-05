@@ -11,6 +11,7 @@
         public Guid RoomId { get; set; }
         public Room Room { get; set; }
 
+        public Guid CoachId { get; set; }
         public Coach Coach { get; set; }
 
         public List<Client>? Client { get; set; } = new List<Client>();

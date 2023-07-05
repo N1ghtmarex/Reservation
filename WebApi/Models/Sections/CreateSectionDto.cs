@@ -8,7 +8,9 @@ namespace WebApi.Models.Sections
     public class CreateSectionDto : IMapWith<CreateSectionCommand>
     {
         public string Name { get; set; } = string.Empty;
-        public Guid SportID { get; set; }
+        public Guid SportId { get; set; }
+        public Guid CoachId { get; set; }
+        public Guid RoomId { get; set; }
 
         public void Mapping(Profile profile)
         {

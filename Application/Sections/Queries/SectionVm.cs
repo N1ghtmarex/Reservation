@@ -1,4 +1,7 @@
-﻿using Application.Common.Mappings;
+﻿using Application.Coachs.Queries;
+using Application.Common.Mappings;
+using Application.Rooms.Queries;
+using Application.Sports.Queries;
 using AutoMapper;
 using Domain.Entities;
 
@@ -7,9 +10,9 @@ namespace Application.Sections.Queries
     public class SectionVm : IMapWith<Section>
     {
         public string Name { get; set; } = string.Empty;
-        public Coach Coach { get; set; }
-        public Sport Sport { get; set; }
-        public Room Room { get; set; }
+        public CoachVm Coach { get; set; }
+        public SportVm Sport { get; set; }
+        public RoomVm Room { get; set; }
 
         public void Mapping(Profile profile)
         {
