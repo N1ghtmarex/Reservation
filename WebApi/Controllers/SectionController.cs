@@ -23,6 +23,12 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Добавить секцию
+        /// </summary>
+        /// <param name="request">Данные секции</param>
+        /// <returns>Возвращает пустой ответ</returns>
+        /// <response code="204">Выполнено успешно</response>
         [HttpPost]
         public async Task<ActionResult> CreateSection([FromForm] CreateSectionDto request)
         {
@@ -33,6 +39,12 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Удалить секцию
+        /// </summary>
+        /// <param name="Id">ID секции</param>
+        /// <returns>Возвращает пустой ответ</returns>
+        /// <response code="204">Выполнено успешно</response>
         [HttpDelete]
         public async Task<ActionResult> DeleteSection([FromForm] Guid Id)
         {
@@ -43,6 +55,12 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Получить данные о секции
+        /// </summary>
+        /// <param name="name">Название</param>
+        /// <returns>Модель секции</returns>
+        /// <response code="200">Выполнено успешно</response>
         [HttpGet]
         public async Task<ActionResult> GetSection(string name)
         {

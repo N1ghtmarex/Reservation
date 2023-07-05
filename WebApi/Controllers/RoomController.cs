@@ -18,6 +18,11 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Добавить зал
+        /// </summary>
+        /// <param name="name">Название</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> CreateRoom([FromForm] string name)
         {

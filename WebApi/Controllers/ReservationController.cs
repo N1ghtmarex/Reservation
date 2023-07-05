@@ -22,6 +22,12 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Создать индивидуальное событие
+        /// </summary>
+        /// <param name="request">Данные о событии</param>
+        /// <returns>Возвращает пустой ответ</returns>
+        /// <response code="204">Выполнено успешно</response>
         [HttpPost("individual")]
         public async Task<ActionResult> CreateIndividualReservation([FromForm] CreateIndividualReservationDto request)
         {
@@ -32,6 +38,12 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Получить индивидуальное событие
+        /// </summary>
+        /// <param name="request">Данные о событии</param>
+        /// <returns>Возвращает модель события</returns>
+        /// <response code="200">Выполнено успешно</response>
         [HttpGet("individual")]
         public async Task<ActionResult<IndividualReservationVm>> GetIndividualReservation([FromQuery] GetIndividualReservationDto request)
         {
@@ -42,6 +54,12 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получить индивидуальное событие по дням
+        /// </summary>
+        /// <param name="day">День недели</param>
+        /// <returns>Возвращает список событий за указанный день</returns>
+        /// <response code="200">Выполнено успешно</response>
         [HttpGet("individual/{day}")]
         public async Task<ActionResult<IndividualReservationListVm>> GetIndividualReservationList(string day)
         {

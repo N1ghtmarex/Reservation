@@ -19,6 +19,11 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Добавить тренера
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> CreateCoach([FromForm] CreateCoachDto request)
         {
