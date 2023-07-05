@@ -8,8 +8,8 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Coach> builder)
         {
-            builder.HasKey(coach => coach.ID);
-            builder.HasIndex(coach => coach.ID).IsUnique();
+            builder.HasKey(coach => coach.Id);
+            builder.HasIndex(coach => coach.Id).IsUnique();
             builder.Property(coach => coach.Name).IsRequired().HasMaxLength(20);
             builder.Property(coach => coach.Surname).IsRequired().HasMaxLength(30);
             builder.Property(coach => coach.Patronymic).HasMaxLength(30);

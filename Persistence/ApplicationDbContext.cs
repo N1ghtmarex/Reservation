@@ -12,6 +12,9 @@ namespace Persistence
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Sport> Sports { get; set; }
+        public DbSet<IndividualRecord> IndividualRecords { get; set; }
+        public DbSet<IndividualReservation> IndividualReservations { get; set; }
+        public DbSet<SectionReservation> SectionReservations { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { 

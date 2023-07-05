@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class IndividualReservation
     {
         public Guid Id { get; set; }
         public string DayOfWeek { get; set; } = string.Empty;
+        public TimeOnly Time { get; set; }
 
         public Guid CoachId { get; set; }
         public Coach Coach { get; set; }

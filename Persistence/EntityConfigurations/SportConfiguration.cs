@@ -8,8 +8,8 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Sport> builder) 
         {
-            builder.HasKey(x => x.ID);
-            builder.HasIndex(x => x.ID);
+            builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
         }
     }
