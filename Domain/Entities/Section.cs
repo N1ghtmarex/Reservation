@@ -11,9 +11,10 @@
         public Guid RoomId { get; set; }
         public Room Room { get; set; }
 
-        public List<Client> Client { get; set; } = new List<Client>();
         public Coach Coach { get; set; }
 
-        public List<GroupRecord> GroupRecord { get; set; } 
+        public List<Client>? Client { get; set; } = new List<Client>();
+
+        public List<SectionReservation>? SectionReservation { get; set; } 
     }
 }

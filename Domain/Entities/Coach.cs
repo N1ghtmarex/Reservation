@@ -8,8 +8,10 @@
         public string Patronymic { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
 
-        public List<Section> Section { get; set; } = new List<Section>();
+        public List<Section>? Section { get; set; } = new List<Section>();
 
-        public List<IndividualReservation> IndividualReservation { get; set; }
+        public List<IndividualReservation>? IndividualReservation { get; set; }
+
+        public List<SectionReservation>? SectionReservation { get; set; }
     }
 }

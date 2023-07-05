@@ -45,11 +45,11 @@ namespace Persistence
                 .HasOne(s => s.Sport)
                 .WithMany(s => s.Section);
 
-            //Настройка связи для событий секции
-            builder.Entity<GroupRecord>()
-                .HasOne(gr => gr.Section)
-                .WithMany(s => s.GroupRecord);
 
+            //Отношения между событием секции и секцией
+            builder.Entity<SectionReservation>()
+                .HasOne(sr => sr.Section)
+                .WithMany(s => s.SectionReservation);
 
             //Настройка связей для индивидуальных событий
             //Отношения между тренером и индивидуальным событием
