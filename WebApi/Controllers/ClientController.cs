@@ -1,5 +1,6 @@
 ﻿using Application.Clients.Commands.Create;
 using Application.Clients.Queries.GetClient;
+using Application.Clients.Queries.GetClientList;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,27 @@ namespace WebApi.Controllers
         public async Task<ActionResult> GetClient(string phone)
         {
             var query = new GetClientQuery { Phone = phone };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Получить список клиентов
+        /// </summary>
+        /// <param name="limit">Ограничение по количеству возвращаемых клиентов</param>
+        /// <param name="offset">Смещение от начала</param>
+        /// <returns>Возвращает список клиентов</returns>
+        /// <response code="200">Выполнено успешно</response>
+        [HttpGet("{limit}/{offset}")]
+        public async Task<ActionResult> GetClients(int limit, int offset)
+        {
+            var query = new GetClientListQuery
+            {
+                Limit = limit,
+                Offset = offset
+            };
 
             var response = await _mediator.Send(query);
 
