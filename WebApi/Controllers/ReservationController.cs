@@ -1,4 +1,7 @@
 ﻿using Application.Reservations.IndividualReservations.Commands.Create;
+using Application.Reservations.IndividualReservations.Queries;
+using Application.Reservations.IndividualReservations.Queries.GetIndividualReservation;
+using Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +30,26 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        [HttpGet("individual")]
+        public async Task<ActionResult<IndividualReservationVm>> GetIndividualReservation([FromQuery] GetIndividualReservationDto request)
+        {
+            var query = _mapper.Map<GetIndividualReservationQuery>(request);
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        [HttpGet("individual/{day}")]
+        public async Task<ActionResult<IndividualReservationListVm>> GetIndividualReservationList(string day)
+        {
+            var query = new GetIndividualReservationListQuery { DayOfWeek = day};
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
         }
     }
 }

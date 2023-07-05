@@ -3,7 +3,6 @@ using AutoMapper;
 using Application.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
-using Application.Sports.Queries;
 
 namespace Application.Sections.Queries.GetSection
 {
