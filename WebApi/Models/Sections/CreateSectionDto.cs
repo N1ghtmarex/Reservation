@@ -12,17 +12,17 @@ namespace WebApi.Models.Sections
         /// </summary>
         public string Name { get; set; } = string.Empty;
         /// <summary>
-        /// Id спорта
+        /// Вид спорта
         /// </summary>
-        public Guid SportId { get; set; }
+        public string SportName { get; set; } = string.Empty;
         /// <summary>
-        /// Id тренера
+        /// Телефон тренера
         /// </summary>
-        public Guid CoachId { get; set; }
+        public string CoachPhone { get; set; } = string.Empty;
         /// <summary>
-        /// Id зала
+        /// Зал
         /// </summary>
-        public Guid RoomId { get; set; }
+        public string RoomName { get; set; } = string.Empty;
 
         public void Mapping(Profile profile)
         {
