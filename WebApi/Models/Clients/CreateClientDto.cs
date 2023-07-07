@@ -23,6 +23,8 @@ namespace WebApi.Models.Clients
         /// </summary>
         public string Phone { get; set; } = string.Empty;
 
+        public string Password { get ; set; } = string.Empty;
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateClientDto, CreateClientCommand>();

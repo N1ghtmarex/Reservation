@@ -10,10 +10,12 @@ namespace Application.Clients.Commands.Create
     public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand>
     {
         private readonly IApplicationDbContext _context;
+        private readonly IPasswordService _passwordService;
 
-        public CreateClientCommandHandler(IApplicationDbContext context)
+        public CreateClientCommandHandler(IApplicationDbContext context, IPasswordService passwordService)
         {
             _context = context;
+            _passwordService = passwordService;
         }
 
         public async Task Handle(CreateClientCommand request, CancellationToken cancellationToken)
@@ -21,11 +23,15 @@ namespace Application.Clients.Commands.Create
             if (await _context.Clients.FirstOrDefaultAsync(x => x.Phone == request.Phone, cancellationToken) != null)
                 throw new AlreadyExistsException("Клиент", "Phone = " + request.Phone);
 
+            _passwordService.CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
+
             var client = new Client
             {
                 Name = request.Name,
                 Surname = request.Surname,
-                Phone = request.Phone
+                Phone = request.Phone,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
             };
 
             if (request.Patronymic != null)

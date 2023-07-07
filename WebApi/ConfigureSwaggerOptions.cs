@@ -24,7 +24,7 @@ namespace WebApi
                     new OpenApiInfo
                     {
                         Version = apiVersion,
-                        Title = $"hui API",
+                        Title = $"Reservation API",
                         Description = "API ",
                         Contact = new OpenApiContact
                         {
