@@ -62,6 +62,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns>Возвращает модель клиента</returns>
         /// <response code="204">Выполнено успешно</response>
+        /// <response code="401">Не авторизован</response>
         /// <response code="500">Клиент не найден</response>
         [HttpGet]
         [Authorize]
