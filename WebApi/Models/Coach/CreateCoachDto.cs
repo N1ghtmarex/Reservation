@@ -22,6 +22,10 @@ namespace WebApi.Models.Coach
         /// Телефон
         /// </summary>
         public string Phone { get; set; } = string.Empty;
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        public string Password { get; set; } = string.Empty;
 
         public void Mapping(Profile profile)
         {

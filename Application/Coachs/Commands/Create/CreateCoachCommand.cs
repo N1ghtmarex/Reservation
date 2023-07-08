@@ -4,10 +4,11 @@ namespace Application.Coachs.Commands.Create
 {
     public class CreateCoachCommand : IRequest
     {
-        public string Name { get; set; } = string.Empty;
-        public string Surname { get; set; } = string.Empty;
+        public required string Name { get; set; }
+        public required string Surname { get; set; }
         public string? Patronymic { get; set; }
-        public string Phone { get; set; } = string.Empty;
+        public required string Phone { get; set; }
+        public required string Password { get; set; }
 
     }
 }

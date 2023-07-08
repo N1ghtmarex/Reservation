@@ -44,9 +44,7 @@ namespace Application.Clients.Commands.Login
 
             var accessToken = _tokenService.Create(claims);
 
-            Console.WriteLine(accessToken);
-
-            return accessToken.ToString();
+            return accessToken;
         }
     }
 }

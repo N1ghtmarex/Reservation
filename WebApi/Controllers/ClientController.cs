@@ -23,6 +23,12 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Войти в аккаунт клиента
+        /// </summary>
+        /// <param name="request">Данные клиента</param>
+        /// <returns>Возвращает токен доступа</returns>
+        /// <response code="200">Выполнено успешно</response>
         [HttpPost("client")]
         public async Task<ActionResult<string>> Auth([FromForm] ClientLoginDto request)
         {
