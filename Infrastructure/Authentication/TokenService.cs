@@ -9,31 +9,18 @@ namespace Infrastructure.Authentication
 {
     internal class TokenService : ITokenService
     {
-        private readonly JwtOptions _jwtOptions;
-
-        public TokenService(IOptions<JwtOptions> jwtOptions)
-        {
-            _jwtOptions = jwtOptions.Value;
-        }
-
         public string Create(IEnumerable<Claim> claims)
         {
-            var signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),
-                SecurityAlgorithms.HmacSha256);
+            var jwt = new JwtSecurityToken(
+            issuer: JwtOptions.ISSUER,
+            audience: JwtOptions.AUDIENCE,
+            claims: claims,
+            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(60)),
+            signingCredentials: new SigningCredentials(JwtOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha512Signature));
 
-            var token = new JwtSecurityToken(
-                _jwtOptions.Issuer,
-                _jwtOptions.Audience,
-                claims,
-                null,
-                DateTime.UtcNow.AddHours(1),
-                signingCredentials);
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var tokenValue = new JwtSecurityTokenHandler()
-                .WriteToken(token);
-
-            return tokenValue;
+            return encodedJwt;
         }
     }
 }

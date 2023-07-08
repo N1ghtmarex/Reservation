@@ -1,11 +1,14 @@
-﻿namespace Infrastructure.Authentication
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+namespace Infrastructure.Authentication
 {
-    public record JwtOptions
+    public class JwtOptions
     {
-        public required string Issuer { get; init; }
-
-        public required string Audience { get; init; }
-
-        public required string SecretKey { get; init; }
+        public const string ISSUER = "MyAuthServer";
+        public const string AUDIENCE = "MyAuthClient";
+        const string KEY = "da8hccz7nc8fafs76da<dak9zada8hccz7nc8fafs76da<dak9zada8hccz7nc8fafs76da<dak9za";
+        public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
+            new(Encoding.UTF8.GetBytes(KEY));
     }
 }

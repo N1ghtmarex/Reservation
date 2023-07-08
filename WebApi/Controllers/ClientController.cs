@@ -1,8 +1,10 @@
 ﻿using Application.Clients.Commands.Create;
+using Application.Clients.Commands.Login;
 using Application.Clients.Queries.GetClient;
 using Application.Clients.Queries.GetClientList;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Clients;
 
@@ -19,6 +21,16 @@ namespace WebApi.Controllers
         {
             _mediator = mediator;
             _mapper = mapper;
+        }
+
+        [HttpPost("client")]
+        public async Task<ActionResult<string>> Auth([FromForm] ClientLoginDto request)
+        {
+            var command = _mapper.Map<ClientLoginCommand>(request);
+
+            var token = await _mediator.Send(command);
+
+            return Ok(token);
         }
 
         /// <summary>
@@ -46,6 +58,7 @@ namespace WebApi.Controllers
         /// <response code="204">Выполнено успешно</response>
         /// <response code="500">Клиент не найден</response>
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetClient(string phone)
         {
             var query = new GetClientQuery { Phone = phone };
