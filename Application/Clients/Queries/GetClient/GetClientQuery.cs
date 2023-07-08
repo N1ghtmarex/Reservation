@@ -4,6 +4,6 @@ namespace Application.Clients.Queries.GetClient
 {
     public class GetClientQuery : IRequest<ClientVm>
     {
-        public string Phone { get; set; }
+        public required Guid Id { get; set; }
     }
 }

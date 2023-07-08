@@ -19,12 +19,12 @@ namespace Application.Clients.Queries.GetClient
 
         public async Task<ClientVm> Handle(GetClientQuery request, CancellationToken cancellationToken)
         {
-            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Phone == request.Phone);
+            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (client != null)
                 return _mapper.Map<ClientVm>(client);
             else
-                throw new NotFoundException("Клиент", "Phone = " + request.Phone);
+                throw new NotFoundException("Клиент", "");
         }
     }
 }

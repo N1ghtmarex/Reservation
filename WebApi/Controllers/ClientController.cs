@@ -6,6 +6,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebApi.Models.Clients;
 
 namespace WebApi.Controllers
@@ -57,17 +58,16 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Найти клиента по номеру телефона
+        /// Получить данные профиля
         /// </summary>
-        /// <param name="phone">Номер телефона</param>
         /// <returns>Возвращает модель клиента</returns>
         /// <response code="204">Выполнено успешно</response>
         /// <response code="500">Клиент не найден</response>
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult> GetClient(string phone)
+        public async Task<ActionResult> GetClient()
         {
-            var query = new GetClientQuery { Phone = phone };
+            var query = new GetClientQuery { Id = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value)};
 
             var response = await _mediator.Send(query);
 
