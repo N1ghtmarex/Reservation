@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Application.Reservations.IndividualReservations.Commands.Create
 {
@@ -19,27 +20,28 @@ namespace Application.Reservations.IndividualReservations.Commands.Create
 
         public async Task Handle(CreateIndividualReservationCommand request, CancellationToken cancellationToken)
         {
-            var coach = await _context.Coachs.FirstOrDefaultAsync(x => x.Phone == request.CoachPhone);
+            var coach = await _context.Coachs.FirstOrDefaultAsync(x => x.Id == request.Id);
             var sport = await _context.Sports.FirstOrDefaultAsync(x => x.Name.ToLower() == request.SportName.ToLower());
-            var time = TimeOnly.Parse(request.Time);
 
             if (coach == null)
-                throw new NotFoundException("Тренер", "Phone = " + request.CoachPhone);
+                throw new NotFoundException("Тренер", "Phone = " + request.Id);
 
             if (sport == null)
                 throw new NotFoundException("Спорт", request.SportName);
 
+            var date = request.Date.ToUniversalTime(); //DateTime.ParseExact(request.Date, "ddMMyyyy", CultureInfo.InvariantCulture);
+            var duration = TimeOnly.Parse(request.Duration);
+            var endDate = date.AddHours(duration.Hour).AddMinutes(duration.Minute);
 
-            if (await _context.IndividualReservations.FirstOrDefaultAsync(x => x.DayOfWeek == request.DayOfWeek
-                && x.Time == time && x.CoachId == coach.Id && x.SportId == sport.Id) != null)
+            if (await _context.IndividualReservations.FirstOrDefaultAsync(x => x.Date == date && x.CoachId == coach.Id && x.SportId == sport.Id) != null)
             {
                 throw new AlreadyExistsException("Событие", "");
             }
 
             var reservation = new IndividualReservation
             {
-                DayOfWeek = request.DayOfWeek,
-                Time = time,
+                Date = date,
+                EndDate = endDate,
                 CoachId = coach.Id,
                 SportId = sport.Id
             };

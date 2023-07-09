@@ -4,28 +4,19 @@ using AutoMapper;
 
 namespace WebApi.Models.IndividualReservation
 {
-    public class CreateIndividualReservationDto : IMapWith<CreateIndividualReservationCommand>
+    public class CreateIndividualReservationDto
     {
         /// <summary>
-        /// День недели
+        /// Дата
         /// </summary>
-        public string DayOfWeek { get; set; } = string.Empty;
+        public DateTime Date { get; set; }
         /// <summary>
-        /// Время в формате ЧЧ:ММ
+        /// Продолжительность
         /// </summary>
-        public string Time { get; set; }
-        /// <summary>
-        /// Телефон тренера
-        /// </summary>
-        public string CoachPhone { get; set; } = string.Empty;
+        public string Duration { get; set; }
         /// <summary>
         /// Вид спорта
         /// </summary>
         public string SportName { get; set; } = string.Empty;
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<CreateIndividualReservationDto, CreateIndividualReservationCommand>();
-        }
     }
 }

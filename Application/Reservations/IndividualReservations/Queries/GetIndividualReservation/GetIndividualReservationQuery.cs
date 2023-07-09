@@ -4,7 +4,7 @@ namespace Application.Reservations.IndividualReservations.Queries.GetIndividualR
 {
     public class GetIndividualReservationQuery : IRequest<IndividualReservationVm>
     {
-        public string DayOfWeek { get; set; } = string.Empty;
+        public DateTime Date { get; set; }
         public string Time { get; set; } = string.Empty;
         public string CoachPhone { get; set; } = string.Empty;
         public string SportName { get; set; } = string.Empty;

@@ -3,8 +3,8 @@
     public class IndividualReservation
     {
         public Guid Id { get; set; }
-        public string DayOfWeek { get; set; } = string.Empty;
-        public TimeOnly Time { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime EndDate { get; set; }
 
         public Guid CoachId { get; set; }
         public Coach Coach { get; set; }

@@ -8,8 +8,8 @@ namespace Application.Reservations.IndividualReservations.Queries
 {
     public class IndividualReservationVm : IMapWith<IndividualReservation>
     {
-        public string DayOfWeek { get; set; } = string.Empty;
-        public string Time { get; set; } = string.Empty;
+        public DateTime Date { get; set; }
+        public DateTime EndDate { get; set; }
         public CoachVm Coach { get; set; } = new();
         public SportVm Sport { get; set; } = new();
 

@@ -29,8 +29,8 @@ namespace Application.Reservations.IndividualReservations.Queries.GetIndividualR
             if (sport == null)
                 throw new NotFoundException("Спорт", request.SportName);
 
-            var reservation = await _context.IndividualReservations.FirstOrDefaultAsync(x => x.DayOfWeek.ToLower() == request.DayOfWeek.ToLower() 
-                && x.CoachId == coach.Id && x.SportId == sport.Id && x.Time == time);
+            var reservation = await _context.IndividualReservations.FirstOrDefaultAsync(x => x.Date == request.Date 
+                && x.CoachId == coach.Id && x.SportId == sport.Id);
 
             if (reservation == null)
                 throw new NotFoundException("Событие", "");
