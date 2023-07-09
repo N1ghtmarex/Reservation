@@ -2,6 +2,7 @@
 using Application.Reservations.IndividualReservations.Queries;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservation;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList;
+using Application.Reservations.SectionReservations.Commands.Create;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebApi.Models.IndividualReservation;
+using WebApi.Models.SectionReservation;
 
 namespace WebApi.Controllers
 {
@@ -80,6 +82,24 @@ namespace WebApi.Controllers
             var response = await _mediator.Send(query);
 
             return Ok(response);
+        }
+
+        [HttpPost("section")]
+        //[Authorize]
+        public async Task<ActionResult> CreateSectionReservation([FromForm] CreateSectionReservationDto request)
+        {
+            var command = new CreateSectionReservationCommand
+            {
+                DayOfWeek = request.DayOfWeek,
+                Duration = request.Duration,
+                Period = request.Period,
+                SectionName = request.SectionName,
+                Time = request.Time
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
         }
     }
 }

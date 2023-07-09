@@ -3,8 +3,11 @@
     public class SectionReservation
     {
         public Guid Id { get; set; }
-        public string DayOfWeek { get; set; }
-        public TimeOnly Time { get; set; }
+        public int DayOfWeek { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+
+        public DateOnly Period { get; set; } 
 
         public Guid CoachId { get; set; }
         public Coach Coach { get; set; }
