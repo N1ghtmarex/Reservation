@@ -1,7 +1,5 @@
-﻿using Application.Coachs.Queries;
-using Application.Common.Mappings;
+﻿using Application.Common.Mappings;
 using Application.Sections.Queries;
-using Application.Sports.Queries;
 using AutoMapper;
 using Domain.Entities;
 
