@@ -9,9 +9,6 @@
 
         public DateOnly Period { get; set; } 
 
-        public Guid CoachId { get; set; }
-        public Coach Coach { get; set; }
-
         public Guid SectionId { get; set; }
         public Section Section { get; set; }
     }

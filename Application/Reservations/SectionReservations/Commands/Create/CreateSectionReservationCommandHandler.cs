@@ -42,7 +42,6 @@ namespace Application.Reservations.SectionReservations.Commands.Create
                 StartTime = startTime,
                 EndTime = endTime,
                 Period = period,
-                CoachId = section.CoachId,
                 SectionId = section.Id
             };
 

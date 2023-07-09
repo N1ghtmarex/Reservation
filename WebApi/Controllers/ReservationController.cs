@@ -3,6 +3,7 @@ using Application.Reservations.IndividualReservations.Queries;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservation;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList;
 using Application.Reservations.SectionReservations.Commands.Create;
+using Application.Reservations.SectionReservations.Queries.GetSectionReservationList;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -100,6 +101,16 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        [HttpGet("section/{day}")]
+        public async Task<ActionResult<SectionReservationListVm>> GetSectionReservations(int day)
+        {
+            var query = new GetSectionReservationListQuery { DayOfWeek = day };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
         }
     }
 }
