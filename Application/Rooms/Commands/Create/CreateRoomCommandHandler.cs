@@ -17,7 +17,7 @@ namespace Application.Rooms.Commands.Create
 
         public async Task Handle(CreateRoomCommand request, CancellationToken cancellationToken)
         {
-            if (await _context.Clients.FirstOrDefaultAsync(x => x.Name.ToLower() == request.Name.ToLower(), cancellationToken) != null)
+            if (await _context.Rooms.FirstOrDefaultAsync(x => x.Name.ToLower() == request.Name.ToLower(), cancellationToken) != null)
                 throw new AlreadyExistsException("Зал", request.Name);
 
             var room = new Room { Name = request.Name };
