@@ -8,7 +8,6 @@ using Application.Reservations.SectionReservations.Queries.GetSectionReservation
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebApi.Models.IndividualReservation;
@@ -122,26 +121,6 @@ namespace WebApi.Controllers
             var response = await _mediator.Send(query);
 
             return Ok(response);
-        }
-
-        /// <summary>
-        /// Записаться на индивидуальное событие
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost("record{id}")]
-        [Authorize]
-        public async Task<ActionResult> CreateRecord(Guid id)
-        {
-            var command = new CreateIndividualRecordCommand
-            {
-                ClientId = Guid.Parse(User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value),
-                ReservationId = id
-            };
-
-            await _mediator.Send(command);
-
-            return NoContent();
         }
     }
 }
