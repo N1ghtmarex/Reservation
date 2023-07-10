@@ -1,4 +1,6 @@
 ﻿using Application.Records.IndividualRecords.Commands.Create;
+using Application.Records.IndividualRecords.Queries.GetIndividualRecordsList;
+using Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -38,6 +40,26 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Расписание на день
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet("{date}")]
+        [Authorize]
+        public async Task<ActionResult<IndividualReservationListVm>> GetRecords(string date)
+        {
+            var query = new GetIndividualRecordsListQuery
+            {
+                ClientId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                Date = date
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
         }
     }
 }
