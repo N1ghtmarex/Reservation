@@ -85,8 +85,13 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Добавить событие секции
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("section")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> CreateSectionReservation([FromForm] CreateSectionReservationDto request)
         {
             var command = new CreateSectionReservationCommand
@@ -103,6 +108,11 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Получить события секций по дням
+        /// </summary>
+        /// <param name="day">День недели</param>
+        /// <returns></returns>
         [HttpGet("section/{day}")]
         public async Task<ActionResult<SectionReservationListVm>> GetSectionReservations(int day)
         {
