@@ -1,4 +1,5 @@
-﻿using Application.Reservations.IndividualReservations.Commands.Create;
+﻿using Application.Records.IndividualRecords.Commands.Create;
+using Application.Reservations.IndividualReservations.Commands.Create;
 using Application.Reservations.IndividualReservations.Queries;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservation;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList;
@@ -121,6 +122,26 @@ namespace WebApi.Controllers
             var response = await _mediator.Send(query);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Записаться на индивидуальное событие
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost("record{id}")]
+        [Authorize]
+        public async Task<ActionResult> CreateRecord(Guid id)
+        {
+            var command = new CreateIndividualRecordCommand
+            {
+                ClientId = Guid.Parse(User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value),
+                ReservationId = id
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
         }
     }
 }

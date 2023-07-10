@@ -4,6 +4,7 @@ using MediatR;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Net;
 
 namespace Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList
 {
@@ -21,10 +22,14 @@ namespace Application.Reservations.IndividualReservations.Queries.GetIndividualR
         public async Task<IndividualReservationListVm> Handle(GetIndividualReservationListQuery request, CancellationToken cancellationToken)
         {
             var date = DateTime.ParseExact(request.Date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-            var reservations = await _context.IndividualReservations.Where(x => x.Date == date.ToUniversalTime())
+
+            var records = await _context.IndividualRecords.Select(x => x.IndividualReservation).ToListAsync(cancellationToken);
+
+            var reservations = await _context.IndividualReservations
+                .Where(x => x.Date == date.ToUniversalTime() && !records.Contains(x))
                 .OrderBy(x => x.Date)
                 .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
             
             reservations.ForEach(delegate (IndividualReservationVm reservation) { 
                 reservation.Date = TimeZoneInfo.ConvertTimeFromUtc(reservation.Date, TimeZoneInfo.Local);
