@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost("record{id}")]
+        [HttpPost("{id}")]
         [Authorize]
         public async Task<ActionResult> CreateRecord(Guid id)
         {
