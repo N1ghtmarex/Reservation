@@ -51,8 +51,8 @@ namespace Application.Records.IndividualRecords.Queries.GetWeekSectionRecordsLis
             {
                 var reservations = await _context.SectionReservations
                     .Where(x => clientSections.Contains(x.Section) 
-                    && ((x.Period <= endDate && x.DayOfWeek < (int)x.Period.DayOfWeek && x.DayOfWeek >= (int)startDate.DayOfWeek) 
-                    || (x.Period > endDate && (x.DayOfWeek >= (int)startDate.DayOfWeek || x.DayOfWeek <= (int)endDate.DayOfWeek) )))
+                        && ((x.Period <= endDate && x.DayOfWeek < (int)x.Period.DayOfWeek && x.DayOfWeek >= (int)startDate.DayOfWeek) 
+                        || (x.Period > endDate && (x.DayOfWeek >= (int)startDate.DayOfWeek || x.DayOfWeek <= (int)endDate.DayOfWeek) )))
                     .OrderBy(x => x.DayOfWeek)
                     .ProjectTo<SectionReservationVm>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);

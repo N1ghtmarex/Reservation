@@ -48,7 +48,7 @@ namespace WebApi.Controllers
         /// <returns>Возвращает токен доступа</returns>
         /// <response code="200">Выполнено успешно</response>
         [HttpPost("coach")]
-        public async Task<ActionResult<string>> LoginCoach([FromForm] CoachLoginDto request)
+        public async Task<ActionResult<string>> LoginCoach([FromBody] CoachLoginDto request)
         {
             var command = _mapper.Map<CoachLoginCommand>(request);
 

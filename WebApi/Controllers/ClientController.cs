@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         /// <returns>Возвращает токен доступа</returns>
         /// <response code="200">Выполнено успешно</response>
         [HttpPost("client")]
-        public async Task<ActionResult<string>> Auth([FromForm] ClientLoginDto request)
+        public async Task<ActionResult<string>> Auth([FromBody] ClientLoginDto request)
         {
             var command = _mapper.Map<ClientLoginCommand>(request);
 
@@ -48,7 +48,7 @@ namespace WebApi.Controllers
         /// <response code="204">Выполнено успешно</response>
         /// <response code="500">Клиент уже существует</response>
         [HttpPost]
-        public async Task<ActionResult> CreateClient([FromForm] CreateClientDto request)
+        public async Task<ActionResult> CreateClient([FromBody] CreateClientDto request)
         {
             var command = _mapper.Map<CreateClientCommand>(request);
 
