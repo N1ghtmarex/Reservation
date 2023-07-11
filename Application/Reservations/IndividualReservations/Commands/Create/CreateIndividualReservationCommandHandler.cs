@@ -29,7 +29,7 @@ namespace Application.Reservations.IndividualReservations.Commands.Create
             if (sport == null)
                 throw new NotFoundException("Спорт", request.SportName);
 
-            var date = request.Date.ToUniversalTime(); //DateTime.ParseExact(request.Date, "ddMMyyyy", CultureInfo.InvariantCulture);
+            var date = DateTime.ParseExact(request.Date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture).ToUniversalTime();
             var duration = TimeOnly.Parse(request.Duration);
             var endDate = date.AddHours(duration.Hour).AddMinutes(duration.Minute);
 

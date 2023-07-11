@@ -36,14 +36,14 @@ namespace WebApi.Controllers
         /// <response code="204">Выполнено успешно</response>
         [HttpPost("individual")]
         [Authorize]
-        public async Task<ActionResult> CreateIndividualReservation([FromForm] CreateIndividualReservationDto request)
+        public async Task<ActionResult> CreateIndividualReservation([FromBody] CreateIndividualReservationDto request)
         {
             var coachId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
 
             var command = new CreateIndividualReservationCommand
             {
                 Id = coachId,
-                Date = request.Date,
+                Date = request.reservationDate,
                 Duration = request.Duration,
                 SportName = request.SportName
             };
@@ -92,7 +92,7 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpPost("section")]
         [Authorize]
-        public async Task<ActionResult> CreateSectionReservation([FromForm] CreateSectionReservationDto request)
+        public async Task<ActionResult> CreateSectionReservation([FromBody] CreateSectionReservationDto request)
         {
             var command = new CreateSectionReservationCommand
             {
@@ -100,7 +100,7 @@ namespace WebApi.Controllers
                 Duration = request.Duration,
                 Period = request.Period,
                 SectionName = request.SectionName,
-                Time = request.Time
+                Time = request.Time,
             };
 
             await _mediator.Send(command);

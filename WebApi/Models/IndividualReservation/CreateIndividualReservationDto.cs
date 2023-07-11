@@ -1,15 +1,11 @@
-﻿using Application.Common.Mappings;
-using Application.Reservations.IndividualReservations.Commands.Create;
-using AutoMapper;
-
-namespace WebApi.Models.IndividualReservation
+﻿namespace WebApi.Models.IndividualReservation
 {
     public class CreateIndividualReservationDto
     {
         /// <summary>
         /// Дата
         /// </summary>
-        public DateTime Date { get; set; }
+        public string reservationDate { get; set; }
         /// <summary>
         /// Продолжительность
         /// </summary>
