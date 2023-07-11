@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
         [HttpPost]
-        public async Task<ActionResult> CreateCoach([FromForm] CreateCoachDto request)
+        public async Task<ActionResult> CreateCoach([FromBody] CreateCoachDto request)
         {
             var command = _mapper.Map<CreateCoachCommand>(request);
 
