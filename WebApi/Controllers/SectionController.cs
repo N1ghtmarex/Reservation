@@ -35,9 +35,15 @@ namespace WebApi.Controllers
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
         [HttpPost]
-        public async Task<ActionResult> CreateSection([FromForm] CreateSectionDto request)
+        public async Task<ActionResult> CreateSection([FromBody] CreateSectionDto request)
         {
-            var command = _mapper.Map<CreateSectionCommand>(request);
+            var command = new CreateSectionCommand
+            {
+                CoachId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                Name = request.Name,
+                RoomId = Guid.Parse(request.RoomId),
+                SportId = Guid.Parse(request.SportId)
+            };
 
             await _mediator.Send(command);
 

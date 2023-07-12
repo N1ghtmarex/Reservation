@@ -17,18 +17,18 @@ namespace Application.Sections.Create
 
         public async Task Handle(CreateSectionCommand request, CancellationToken cancellationToken)
         {
-            var coach = await _context.Coachs.FirstOrDefaultAsync(x => x.Phone == request.CoachPhone);
-            var sport = await _context.Sports.FirstOrDefaultAsync(x => x.Name.ToLower() == request.SportName.ToLower());
-            var room = await _context.Rooms.FirstOrDefaultAsync(x => x.Name.ToLower() == request.RoomName.ToLower());
+            var coach = await _context.Coachs.FirstOrDefaultAsync(x => x.Id == request.CoachId);
+            var sport = await _context.Sports.FirstOrDefaultAsync(x => x.Id == request.SportId);
+            var room = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == request.RoomId);
 
             if (coach == null)
-                throw new NotFoundException("Тренер", "Phone = " + request.CoachPhone);
+                throw new NotFoundException("Тренер", "Phone = " + request.CoachId);
 
             if (sport == null)
-                throw new NotFoundException("Спорт", request.SportName);
+                throw new NotFoundException("Спорт", request.SportId);
 
             if (room == null)
-                throw new NotFoundException("Зал", request.SportName);
+                throw new NotFoundException("Зал", request.RoomId);
 
             await _context.Sections.AddAsync(new Section
             {
