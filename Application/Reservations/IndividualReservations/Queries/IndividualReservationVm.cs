@@ -8,6 +8,7 @@ namespace Application.Reservations.IndividualReservations.Queries
 {
     public class IndividualReservationVm : IMapWith<IndividualReservation>
     {
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public DateTime EndDate { get; set; }
         public CoachVm Coach { get; set; } = new();

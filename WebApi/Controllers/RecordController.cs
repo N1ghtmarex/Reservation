@@ -1,6 +1,7 @@
 ﻿using Application.Records.IndividualRecords.Commands.Create;
 using Application.Records.IndividualRecords.Queries.GetIndividualRecordsList;
 using Application.Records.IndividualRecords.Queries.GetSectionRecordsList;
+using Application.Records.IndividualRecords.Queries.GetWeekIndividualRecordsList;
 using Application.Reservations.IndividualReservations.Queries.GetIndividualReservationList;
 using Application.Reservations.SectionReservations.Queries.GetSectionReservationList;
 using AutoMapper;
@@ -87,16 +88,36 @@ namespace WebApi.Controllers
         /// <summary>
         /// Расписание секции на день
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="day"></param>
         /// <returns></returns>
-        [HttpGet("sections/day={date}")]
+        [HttpGet("sections/day={day}")]
         [Authorize]
-        public async Task<ActionResult<SectionReservationListVm>> GetDaySectionRecords(string date)
+        public async Task<ActionResult<SectionReservationListVm>> GetDaySectionRecords(string day)
         {
             var query = new GetSectionReservationListQuery
             {
                 ClientId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
-                Date = date
+                Date = day
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Расписание индивидуальных занятий на неделю
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet("individual/week={date}")]
+        [Authorize]
+        public async Task<ActionResult<IndividualReservationListVm>> GetWeekIndividualRecords(string date)
+        {
+            var query = new GetWeekIndividualRecordsListQuery
+            {
+                ClientId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                StartDate = date
             };
 
             var response = await _mediator.Send(query);
