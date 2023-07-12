@@ -32,6 +32,11 @@ namespace Application.Records.IndividualRecords.Queries.GetIndividualRecordsList
                     .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
+            records.ForEach(delegate (IndividualReservationVm reservation) {
+                reservation.Date = TimeZoneInfo.ConvertTimeFromUtc(reservation.Date, TimeZoneInfo.Local);
+                reservation.EndDate = TimeZoneInfo.ConvertTimeFromUtc(reservation.EndDate, TimeZoneInfo.Local);
+            });
+
             return new IndividualReservationListVm { IndividualReservations = records };
         }
     }
