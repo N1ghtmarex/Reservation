@@ -1,11 +1,15 @@
 ﻿using Application.Interfaces;
+using Application.Sections.Commands.AddClient;
 using Application.Sections.Commands.Delete;
 using Application.Sections.Create;
 using Application.Sections.Queries.GetSection;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebApi.Models.Sections;
 
 namespace WebApi.Controllers
@@ -69,6 +73,21 @@ namespace WebApi.Controllers
             var response = await _mediator.Send(query);
 
             return Ok(response);
+        }
+
+        [HttpPost("add-to-section={sectionId}")]
+        [Authorize]
+        public async Task<ActionResult> AddClientToSection(string sectionId)
+        {
+            var command = new AddClientToSectionCommand
+            {
+                ClientId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                SectionId = Guid.Parse(sectionId)
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
         }
     }
 }
