@@ -22,12 +22,12 @@ namespace Application.Records.IndividualRecords.Queries.GetIndividualRecordsList
 
         public async Task<IndividualReservationListVm> Handle(GetIndividualRecordsListQuery request, CancellationToken cancellationToken)
         {
-            var date = DateTime.ParseExact(request.Date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            var date = DateOnly.ParseExact(request.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
             var records = await _context.IndividualRecords
                 .Where(x => x.ClientId == request.ClientId)
                 .Select(x => x.IndividualReservation)
-                    .Where(x => x.Date == date.ToUniversalTime())
+                    .Where(x => DateOnly.FromDateTime(x.Date) == date)
                     .OrderBy(x => x.Date)
                     .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);

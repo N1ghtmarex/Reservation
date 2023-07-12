@@ -14,6 +14,5 @@
 
         public List<IndividualReservation>? IndividualReservation { get; set; }
 
-        public List<SectionReservation>? SectionReservation { get; set; }
     }
 }

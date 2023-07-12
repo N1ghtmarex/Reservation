@@ -31,12 +31,12 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpPost("{id}")]
         [Authorize]
-        public async Task<ActionResult> CreateRecord(Guid id)
+        public async Task<ActionResult> CreateRecord(string id)
         {
             var command = new CreateIndividualRecordCommand
             {
                 ClientId = Guid.Parse(User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value),
-                ReservationId = id
+                ReservationId = Guid.Parse(id)
             };
 
             await _mediator.Send(command);
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Расписание на день
+        /// Расписание индивидуальных событий на день
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
