@@ -1,4 +1,5 @@
 ﻿using Application.Rooms.Commands.Create;
+using Application.Rooms.Queries.GetRoomList;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,20 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Получить список залов
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<RoomListVm>> GetRooms()
+        {
+            var query = new GetRoomListQuery { };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
         }
     }
 }
