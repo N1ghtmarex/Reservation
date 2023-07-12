@@ -9,6 +9,7 @@ namespace Application.Sections.Queries
 {
     public class SectionVm : IMapWith<Section>
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public CoachVm Coach { get; set; }
         public SportVm Sport { get; set; }

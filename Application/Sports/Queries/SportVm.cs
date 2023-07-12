@@ -6,6 +6,7 @@ namespace Application.Sports.Queries
 {
     public class SportVm : IMapWith<Sport>
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public void Mapping(Profile profile)
