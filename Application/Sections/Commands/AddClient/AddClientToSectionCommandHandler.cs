@@ -47,7 +47,7 @@ namespace Application.Sections.Commands.AddClient
             
             _context.Clients.Update(client);
 
-            _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
