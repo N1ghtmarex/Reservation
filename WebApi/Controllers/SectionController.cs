@@ -3,6 +3,7 @@ using Application.Sections.Commands.AddClient;
 using Application.Sections.Commands.Delete;
 using Application.Sections.Create;
 using Application.Sections.Queries.GetSection;
+using Application.Sections.Queries.GetSectionList;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -88,6 +89,26 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Получить список секций
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        [HttpGet("{limit}/{offset}")]
+        public async Task<ActionResult<SectionListVm>> GetSections(int limit, int offset)
+        {
+            var query = new GetSectionListQuery
+            {
+                Limit = limit,
+                Offset = offset
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
         }
     }
 }
