@@ -35,9 +35,9 @@ namespace Application.Sections.Create
                 Name = request.Name,
                 SportId = sport.Id,
                 CoachId = coach.Id,
-                RoomId = room.Id
-                
-            }, cancellationToken);
+                RoomId = room.Id,
+
+            }, cancellationToken); ;
 
             await _context.SaveChangesAsync(cancellationToken);
         }

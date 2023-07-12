@@ -114,9 +114,9 @@ namespace WebApi.Controllers
         /// <param name="day">День недели</param>
         /// <returns></returns>
         [HttpGet("section/{day}")]
-        public async Task<ActionResult<SectionReservationListVm>> GetSectionReservations(int day)
+        public async Task<ActionResult<SectionReservationListVm>> GetSectionReservations(string day)
         {
-            var query = new GetSectionReservationListQuery { DayOfWeek = day };
+            var query = new GetSectionReservationListQuery { Date = day };
 
             var response = await _mediator.Send(query);
 

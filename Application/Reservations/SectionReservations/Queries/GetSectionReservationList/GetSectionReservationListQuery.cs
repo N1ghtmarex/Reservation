@@ -4,6 +4,7 @@ namespace Application.Reservations.SectionReservations.Queries.GetSectionReserva
 {
     public class GetSectionReservationListQuery : IRequest<SectionReservationListVm>
     {
-        public required int DayOfWeek { get; set; }
+        public Guid ClientId { get; set; }
+        public required string Date { get; set; }
     }
 }

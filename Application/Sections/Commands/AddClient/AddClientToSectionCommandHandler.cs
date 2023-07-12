@@ -26,28 +26,37 @@ namespace Application.Sections.Commands.AddClient
                 throw new NotFoundException("Клиент", "");
             }
 
-            var section = await _context.Sections.FirstOrDefaultAsync(x => x.Id == request.SectionId);
+            var section = _context.Sections
+                .Where(x => x.Id == request.SectionId)
+                .Include(x => x.Sport)
+                .Include(x => x.Room)
+                .Include(x => x.Coach)
+                .Include(x => x.SectionReservation)
+                .FirstOrDefaultAsync(cancellationToken).Result;
 
             if (section == null)
             {
                 throw new NotFoundException("Секция", "");
             }
-
-            if (client.Section == null)
-            {
-                var sections = new List<Section>();
-                sections.Add(section);
-
-                client.Section = sections;
-            }
             else
             {
-                client.Section.Add(section);
+                if (client.Section == null)
+                {
+                    var sections = new List<Section>
+                {
+                    section
+                };
+
+                    client.Section = sections;
+                }
+                else
+                {
+                    client.Section.Add(section);
+                }
+
+                await _context.SaveChangesAsync(cancellationToken);
             }
             
-            _context.Clients.Update(client);
-
-            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -83,5 +83,25 @@ namespace WebApi.Controllers
 
             return Ok(response);
         }
+
+        /// <summary>
+        /// Расписание секции на день
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet("sections/day={date}")]
+        [Authorize]
+        public async Task<ActionResult<SectionReservationListVm>> GetDaySectionRecords(string date)
+        {
+            var query = new GetSectionReservationListQuery
+            {
+                ClientId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                Date = date
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
     }
 }
