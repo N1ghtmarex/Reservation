@@ -20,8 +20,6 @@ namespace Application.Sports.Queries.GetSportsList
         public async Task<SportsListVm> Handle(GetSportsListQuery request, CancellationToken cancellationToken)
         {
             var sports = await _context.Sports
-                .Skip(request.Offset)
-                .Take(request.Limit)
                 .ProjectTo<SportVm>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 

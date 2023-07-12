@@ -56,37 +56,14 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Получить вид спорта
-        /// </summary>
-        /// <param name="name">Вид спорта</param>
-        /// <returns>Возвращает модель спорта</returns>
-        /// <response code="200">Выполнено успешно</response>
-        /// <response code="500">Сущность не найдена</response>
-        [HttpGet]
-        public async Task<ActionResult<SportVm>> GetSport(string name)
-        {
-            var query = new GetSportQuery { Name = name };
-
-            var response = await _mediator.Send(query);
-
-            return Ok(response);
-        }
-
-        /// <summary>
         ///  Получить список видов спорта
         /// </summary>
-        /// <param name="limit">Ограничение по количеству возвращаемых видов спорта</param>
-        /// <param name="offset">Смещение от начала</param>
         /// <returns>Возвращает список видов спорта</returns>
         /// <response code="200">Выполнено успешно</response>
-        [HttpGet("{limit}/{offset}")]
-        public async Task<ActionResult<SportsListVm>> GetSportsList(int limit, int offset)
+        [HttpGet]
+        public async Task<ActionResult<SportsListVm>> GetSportsList()
         {
-            var query = new GetSportsListQuery 
-            { 
-                Limit = limit,
-                Offset = offset 
-            };
+            var query = new GetSportsListQuery { };
 
             var response = await _mediator.Send(query);
 
