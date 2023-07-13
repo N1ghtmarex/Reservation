@@ -7,6 +7,6 @@ namespace Application.Reservations.IndividualReservations.Commands.Create
         public Guid Id { get; set; }
         public required string Date { get; set; }
         public required string Duration { get; set; }
-        public string SportName { get; set; } = string.Empty;
+        public Guid SportId { get; set; }
     }
 }

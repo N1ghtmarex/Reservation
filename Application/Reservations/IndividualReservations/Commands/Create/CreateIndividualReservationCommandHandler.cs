@@ -21,13 +21,13 @@ namespace Application.Reservations.IndividualReservations.Commands.Create
         public async Task Handle(CreateIndividualReservationCommand request, CancellationToken cancellationToken)
         {
             var coach = await _context.Coachs.FirstOrDefaultAsync(x => x.Id == request.Id);
-            var sport = await _context.Sports.FirstOrDefaultAsync(x => x.Name.ToLower() == request.SportName.ToLower());
+            var sport = await _context.Sports.FirstOrDefaultAsync(x => x.Id == request.SportId);
 
             if (coach == null)
                 throw new NotFoundException("Тренер", "Phone = " + request.Id);
 
             if (sport == null)
-                throw new NotFoundException("Спорт", request.SportName);
+                throw new NotFoundException("Спорт", request.SportId);
 
             var date = DateTime.ParseExact(request.Date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture).ToUniversalTime();
             var duration = TimeOnly.Parse(request.Duration);

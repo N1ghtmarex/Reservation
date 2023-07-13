@@ -45,7 +45,7 @@ namespace WebApi.Controllers
                 Id = coachId,
                 Date = request.reservationDate,
                 Duration = request.Duration,
-                SportName = request.SportName
+                SportId = Guid.Parse(request.SportId)
             };
 
             await _mediator.Send(command);
