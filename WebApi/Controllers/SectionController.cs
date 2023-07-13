@@ -2,7 +2,7 @@
 using Application.Sections.Commands.AddClient;
 using Application.Sections.Commands.Delete;
 using Application.Sections.Create;
-using Application.Sections.Queries.GetSection;
+using Application.Sections.Queries.GetSectionForRecord;
 using Application.Sections.Queries.GetSectionList;
 using AutoMapper;
 using Domain.Entities;
@@ -67,15 +67,14 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Получить данные о секции
+        /// Получить секцию для записи
         /// </summary>
-        /// <param name="name">Название</param>
         /// <returns>Модель секции</returns>
         /// <response code="200">Выполнено успешно</response>
-        [HttpGet]
-        public async Task<ActionResult> GetSection(string name)
+        [HttpGet("free")]
+        public async Task<ActionResult> GetSectionForRecord()
         {
-            var query = new GetSectionQuery { Name = name };
+            var query = new GetSectionForRecordQuery { ClientId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value) };
 
             var response = await _mediator.Send(query);
 
