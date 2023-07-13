@@ -13,6 +13,6 @@
         /// <summary>
         /// Вид спорта
         /// </summary>
-        public string SportName { get; set; } = string.Empty;
+        public required string SportId { get; set; }
     }
 }
