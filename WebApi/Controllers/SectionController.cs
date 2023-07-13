@@ -103,14 +103,10 @@ namespace WebApi.Controllers
         /// <param name="limit"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
-        [HttpGet("{limit}/{offset}")]
-        public async Task<ActionResult<SectionListVm>> GetSections(int limit, int offset)
+        [HttpGet("all")]
+        public async Task<ActionResult<SectionListVm>> GetSections()
         {
-            var query = new GetSectionListQuery
-            {
-                Limit = limit,
-                Offset = offset
-            };
+            var query = new GetSectionListQuery {};
 
             var response = await _mediator.Send(query);
 

@@ -22,8 +22,6 @@ namespace Application.Sections.Queries.GetSectionList
         public async Task<SectionListVm> Handle(GetSectionListQuery request, CancellationToken cancellationToken)
         {
             var sections = await _context.Sections
-                .Skip(request.Offset)
-                .Take(request.Limit)
                 .ProjectTo<SectionVm>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
