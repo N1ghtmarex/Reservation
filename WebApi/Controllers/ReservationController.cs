@@ -54,31 +54,23 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Получить индивидуальное событие
-        /// </summary>
-        /// <param name="request">Данные о событии</param>
-        /// <returns>Возвращает модель события</returns>
-        /// <response code="200">Выполнено успешно</response>
-        [HttpGet("individual")]
-        public async Task<ActionResult<IndividualReservationVm>> GetIndividualReservation([FromQuery] GetIndividualReservationDto request)
-        {
-            var query = _mapper.Map<GetIndividualReservationQuery>(request);
-
-            var response = await _mediator.Send(query);
-
-            return Ok(response);
-        }
-
-        /// <summary>
         /// Получить индивидуальное событие по дням
         /// </summary>
-        /// <param name="date">Дата</param>
+        /// <param name="request">параметры фильтрации</param>
         /// <returns>Возвращает список событий за указанный день</returns>
         /// <response code="200">Выполнено успешно</response>
-        [HttpGet("individual/{date}")]
-        public async Task<ActionResult<IndividualReservationListVm>> GetIndividualReservationList(string date)
+        [HttpGet("individual")]
+        public async Task<ActionResult<IndividualReservationListVm>> GetIndividualReservationList(string? date, string? time, string? sportId)
         {
-            var query = new GetIndividualReservationListQuery { Date = date };
+            var query = new GetIndividualReservationListQuery { 
+                Date = date,
+                Time = time
+            };
+
+            if (sportId != null)
+            {
+                query.SportId = Guid.Parse(sportId);
+            }
 
             var response = await _mediator.Send(query);
 

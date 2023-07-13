@@ -4,13 +4,11 @@ using AutoMapper;
 
 namespace WebApi.Models.IndividualReservation
 {
-    public class GetIndividualReservationListDto : IMapWith<GetIndividualReservationListQuery>
+    public class GetIndividualReservationListDto
     {
-        public DateTime Date { get; set; }
+        public string? Date { get; set; }
+        public string? Time { get; set; }
+        public string? SportId { get; set; }
 
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<GetIndividualReservationListDto, GetIndividualReservationListQuery>();
-        }
     }
 }
