@@ -99,7 +99,7 @@ namespace WebApi.Controllers
                 DayOfWeek = request.DayOfWeek,
                 Duration = request.Duration,
                 Period = request.Period,
-                SectionName = request.SectionName,
+                SectionId = Guid.Parse(request.SectionId),
                 Time = request.Time,
             };
 

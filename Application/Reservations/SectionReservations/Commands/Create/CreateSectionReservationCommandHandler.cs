@@ -19,11 +19,11 @@ namespace Application.Reservations.SectionReservations.Commands.Create
 
         public async Task Handle(CreateSectionReservationCommand request, CancellationToken cancellationToken)
         {
-            var section = await _context.Sections.FirstOrDefaultAsync(x => x.Name.ToLower() == request.SectionName.ToLower());
+            var section = await _context.Sections.FirstOrDefaultAsync(x => x.Id == request.SectionId);
 
             if (section == null) 
             {
-                throw new NotFoundException("Секция", "Name = " + request.SectionName);
+                throw new NotFoundException("Секция", "Name = " + request.SectionId);
             }
 
             var period = DateOnly.ParseExact(request.Period, "dd-MM-yyyy");

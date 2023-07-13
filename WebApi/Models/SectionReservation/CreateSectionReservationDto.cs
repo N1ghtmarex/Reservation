@@ -10,6 +10,6 @@ namespace WebApi.Models.SectionReservation
         public required string Time { get; set; }
         public required string Duration { get; set; }
         public string Period { get; set; }
-        public required string SectionName { get; set; }
+        public required string SectionId { get; set; }
     }
 }

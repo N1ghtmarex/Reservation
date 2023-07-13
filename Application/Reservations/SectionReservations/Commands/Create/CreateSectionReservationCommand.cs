@@ -13,6 +13,6 @@ namespace Application.Reservations.SectionReservations.Commands.Create
         public required string Time { get; set; }
         public required string Duration { get; set; }
         public string Period { get; set; }
-        public required string SectionName { get; set; }
+        public Guid SectionId { get; set; }
     }
 }
