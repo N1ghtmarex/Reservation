@@ -50,7 +50,7 @@ namespace Application.Reservations.IndividualReservations.Queries.GetIndividualR
                 reservations = await _context.IndividualReservations
                     .Where(x => !records.Contains(x)
                         && DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy")
-                        && TimeOnly.FromDateTime(x.Date) == TimeOnly.ParseExact(request.Time, "HH:mm"))
+                        && TimeOnly.FromDateTime(x.Date).AddHours(5) == TimeOnly.ParseExact(request.Time, "HH:mm"))
                     .OrderBy(x => x.Date)
                     .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
@@ -61,7 +61,7 @@ namespace Application.Reservations.IndividualReservations.Queries.GetIndividualR
                 reservations = await _context.IndividualReservations
                     .Where(x => !records.Contains(x)
                         && DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy")
-                        && TimeOnly.FromDateTime(x.Date) == TimeOnly.ParseExact(request.Time, "HH:mm")
+                        && TimeOnly.FromDateTime(x.Date).AddHours(5) == TimeOnly.ParseExact(request.Time, "HH:mm")
                         && x.SportId == request.SportId)
                     .OrderBy(x => x.Date)
                     .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
