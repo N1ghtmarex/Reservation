@@ -26,97 +26,30 @@ namespace Application.Reservations.IndividualReservations.Queries.GetIndividualR
                 .Select(x => x.IndividualReservation)
                 .ToListAsync(cancellationToken);
 
-            List<IndividualReservationVm> reservations = new();
-
             if (request.SportId != null)
             {
                 var sport = await _context.Sports.FirstOrDefaultAsync(x => x.Id == request.SportId, cancellationToken) ?? throw new NotFoundException("Спорт", "");
             }
 
-            // дата
-            if (request.Date != null && request.Time == null && request.SportId == null)
-            {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                        && DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy"))
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+            var query = _context.IndividualReservations.Where(x => !records.Contains(x));
 
-            }
-            // дата, время
-            else if (request.Date != null && request.Time != null && request.SportId == null)
+            if (request.Date != null)
             {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                        && DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy")
-                        && TimeOnly.FromDateTime(x.Date).AddHours(5) == TimeOnly.ParseExact(request.Time, "HH:mm"))
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                query = query.Where(x => DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy"));
             }
-            // дата, время, спорт
-            else if (request.Date != null && request.Time != null && request.SportId != null)
+            if (request.Time != null)
             {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                        && DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy")
-                        && TimeOnly.FromDateTime(x.Date).AddHours(5) == TimeOnly.ParseExact(request.Time, "HH:mm")
-                        && x.SportId == request.SportId)
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                query = query.Where(x => TimeOnly.FromDateTime(x.Date).AddHours(5) == TimeOnly.ParseExact(request.Time, "HH:mm"));
             }
-            // дата, спорт
-            else if (request.Date != null && request.Time == null && request.SportId != null)
+            if (request.SportId != null)
             {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                        && DateOnly.FromDateTime(x.Date) == DateOnly.ParseExact(request.Date, "dd-MM-yyyy")
-                        && x.SportId == request.SportId)
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                query = query.Where(x => x.SportId == request.SportId);
             }
-            // время
-            else if (request.Date == null && request.Time != null && request.SportId == null)
-            {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                        && TimeOnly.FromDateTime(x.Date).AddHours(5) == TimeOnly.ParseExact(request.Time, "HH:mm"))
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
-            }
-            // время, спорт
-            else if (request.Date == null && request.Time != null && request.SportId != null)
-            {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                        && TimeOnly.FromDateTime(x.Date) == TimeOnly.ParseExact(request.Time, "HH:mm")
-                        && x.SportId == request.SportId)
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
-            }
-            // спорт
-            else if (request.Date == null && request.Time == null && request.SportId != null)
-            {
-                reservations = await _context.IndividualReservations
-                    .Where(x => !records.Contains(x)
-                    && x.SportId == request.SportId)
-                    .OrderBy(x => x.Date)
-                    .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
-            }
-            else
-            {
-                reservations = await _context.IndividualReservations
-                .Where(x => !records.Contains(x))
+
+            var reservations = await query
                 .OrderBy(x => x.Date)
                 .ProjectTo<IndividualReservationVm>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
-            }
 
             reservations.ForEach(delegate (IndividualReservationVm reservation)
             {
